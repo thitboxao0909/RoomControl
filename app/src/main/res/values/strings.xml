@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Auth</string>
+    <string name="connect_your_google_account_to_sign_in">Connect Your Google Account to Sign in</string>
+</resources>
