@@ -41,27 +41,29 @@ public class SettingsActivity extends AppCompatActivity {
         Log.d("tag","on create " + firebaseAuth.getCurrentUser().getEmail());
         logInText.setText("Log in as: " + firebaseAuth.getCurrentUser().getEmail());
         //Client Type radio buttons
-        createRadioButton();
-        //TODO: fix
         String type = getClientType(this);
-        applySettingButton(type);
+        createRadioButton();
+        applySettingButton();
         Toast.makeText(this, type, Toast.LENGTH_SHORT)
                 .show();
     }
     //TODO: fix apply setting
-    private void applySettingButton(final String type)
+    private void applySettingButton()
     {
+        final String type = getClientType(this);
         Button button = (Button) findViewById(R.id.applyClient);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String type = getClientOnClick(this);
                 if(type.equals("Landlord"))
                 {
                     startActivity(new Intent(SettingsActivity.this, LandlordMain.class));
                 }else if(type.equals("Tenant"))
                 {
                     startActivity((new Intent(SettingsActivity.this, TenantMain.class)));
-                }else Toast.makeText(SettingsActivity.this, "Client type setting not saved", Toast.LENGTH_SHORT);
+                }else Toast.makeText(SettingsActivity.this, "Client type setting not saved", Toast.LENGTH_SHORT)
+                            .show();
             }
         });
     }
@@ -81,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Toast.makeText(SettingsActivity.this, "Client type: " + type + " chosen",Toast.LENGTH_SHORT)
                             .show();
+                    saveClientType(type);
 
                 }
             });
@@ -104,9 +107,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     static public String getClientType(Context context)
     {
+        String defaultType = context.getResources().getString(R.string.default_client_type);
         SharedPreferences prefs = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         //TODO: fix get type
-        return prefs.getString("Client Type", "DEFAULT");
+        return prefs.getString("Client Type", defaultType);
+    }
+    private String getClientOnClick(View.OnClickListener onClickListener)
+    {
+        String defaultType = this.getResources().getString(R.string.default_client_type);
+        SharedPreferences prefs = this.getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        return prefs.getString("Client Type", defaultType);
     }
 
     public void logout(final View view)
