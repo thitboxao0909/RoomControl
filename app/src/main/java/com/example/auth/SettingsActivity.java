@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -18,8 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends AppCompatActivity {
 
-     Toolbar toolbar;
-
+    Toolbar toolbar;
+    TextView logInText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +29,10 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("App Settings");
-
+        logInText = (TextView) findViewById(R.id.logInText);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         Log.d("tag","on create " + firebaseAuth.getCurrentUser().getEmail());
-        firebaseAuth.getCurrentUser().getEmail();
-
-
-
-
-
-
+        logInText.setText("Log in as: " + firebaseAuth.getCurrentUser().getEmail());
 
 
     }
