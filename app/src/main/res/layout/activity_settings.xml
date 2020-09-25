@@ -12,4 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/LogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginBottom="455dp"
+        android:onClick="logout"
+        android:text="Log Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
