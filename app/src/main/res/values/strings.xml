@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Auth</string>
+    <string name="app_name">Room Control</string>
     <string name="connect_your_google_account_to_sign_in">Connect Your Google Account to Sign in</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
@@ -23,6 +23,9 @@
     <string name="log_out">Log Out</string>
     <string name="client_type">Client Type</string>
     <string name="choose_client_type">Choose client type</string>
-    <string name="Type">\"Type: \"</string>
+    <string name="Type">Type: </string>
     <string name="apply_client_type">Apply Client Type</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome">Welcome</string>
+    <string name="name">Name</string>
 </resources>

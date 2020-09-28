@@ -55,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String type = getClientOnClick(this);
+                String type = getClientType(SettingsActivity.this);
                 if(type.equals("Landlord"))
                 {
                     startActivity(new Intent(SettingsActivity.this, LandlordMain.class));
@@ -110,12 +110,6 @@ public class SettingsActivity extends AppCompatActivity {
         String defaultType = context.getResources().getString(R.string.default_client_type);
         SharedPreferences prefs = context.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         //TODO: fix get type
-        return prefs.getString("Client Type", defaultType);
-    }
-    private String getClientOnClick(View.OnClickListener onClickListener)
-    {
-        String defaultType = this.getResources().getString(R.string.default_client_type);
-        SharedPreferences prefs = this.getSharedPreferences("AppPrefs", MODE_PRIVATE);
         return prefs.getString("Client Type", defaultType);
     }
 
