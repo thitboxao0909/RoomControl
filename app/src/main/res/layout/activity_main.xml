@@ -8,26 +8,48 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/SettingsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="292dp"
-            android:layout_marginTop="68dp"
-            android:layout_marginEnd="31dp"
-            android:layout_marginBottom="615dp"
+            android:layout_marginStart="250dp"
+            android:layout_marginTop="32dp"
+            android:layout_weight="0"
             android:text="@string/settings" />
 
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_weight="0"
+            android:text="@string/welcome"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_weight="0"
+            android:text="@string/name"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/getStartedBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:layout_weight="0"
+            android:text="@string/get_started" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,9 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button button;
+    private Button getStartedBtn;
+    private Button settingButton;
+    private TextView Name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +34,33 @@ public class MainActivity extends AppCompatActivity {
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                 .putBoolean("isFirstRun", false).apply();
 
-        button = (Button) findViewById(R.id.SettingsBtn);
-        button.setOnClickListener(new View.OnClickListener() {
+        settingButton = (Button) findViewById(R.id.SettingsBtn);
+        settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             }
         });
 
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        Name = (TextView) findViewById(R.id.nameText);
+        Name.setText(firebaseAuth.getCurrentUser().getDisplayName());
+
+        getStartedBtn = (Button) findViewById(R.id.getStartedBtn);
+        getStartedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String type = SettingsActivity.getClientType(MainActivity.this);
+                if(type.equals("Landlord"))
+                {
+                    startActivity(new Intent(MainActivity.this, LandlordMain.class));
+                }else if(type.equals("Tenant"))
+                {
+                    startActivity((new Intent(MainActivity.this, TenantMain.class)));
+                }else Toast.makeText(MainActivity.this, "Client type setting not saved, Open settings to reconfigure", Toast.LENGTH_LONG)
+                            .show();
+            }
+        });
 
 
     }
