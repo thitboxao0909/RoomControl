@@ -9,6 +9,8 @@ public class Room {
     private static AtomicInteger uniqueID = new AtomicInteger();
     int[] Occupant;
 
+    public Room(){}
+
     public Room(String address, String billDate, String roomType, int price, Boolean furnished)
     {
         this.id = uniqueID.getAndIncrement();

@@ -32,12 +32,12 @@ public class AddProperty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_property);
-
+        //layout hook
         address = (TextInputLayout) findViewById(R.id.inputAddress);
         price = (TextInputLayout) findViewById(R.id.inputPrice);
         billDate = (TextInputLayout) findViewById(R.id.inputBillDate);
-
         toolbar = (Toolbar) findViewById(R.id.toolbarAddProperty);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Property");
         createRadioGroup();
@@ -46,6 +46,9 @@ public class AddProperty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addProperty();
+                Toast.makeText(AddProperty.this, "Room added. Database update may take a moment", Toast.LENGTH_SHORT)
+                        .show();
+                finish();
             }
         });
     }
@@ -138,7 +141,6 @@ public class AddProperty extends AppCompatActivity {
             room.setInviteCode(dbRoomID);
             room.setOwner(FirebaseUID);
             reference.child(dbRoomID).setValue(room);
-
         }
     }
 }
