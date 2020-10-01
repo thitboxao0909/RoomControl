@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="furnished" >
+        <item>True</item>
+        <item>False</item>
+    </string-array>
+    <string-array name="room_type">
+        <item>Single</item>
+        <item>Double</item>
+        <item>Master</item>
+        <item>Studio</item>
+    </string-array>
+</resources>
