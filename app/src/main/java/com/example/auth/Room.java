@@ -94,4 +94,9 @@ public class Room {
     public void setOccupant(List<String> occupant) {
         Occupant = occupant;
     }
+
+    public void addOccupant(String occupant)
+    {
+        Occupant.add(occupant);
+    }
 }

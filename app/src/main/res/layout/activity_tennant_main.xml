@@ -11,7 +11,7 @@
         android:id="@+id/tenantSettingsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
+        android:layout_gravity="end"
         android:layout_marginTop="32dp"
         android:text="@string/settings" />
 
@@ -32,22 +32,38 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/tenantRefresh"
+        android:id="@+id/tenantRefreshBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
+        android:layout_margin="6dp"
+        android:layout_gravity="end"
         android:text="@string/refresh_data" />
+
+    <TextView
+        android:id="@+id/tenantCurrentRentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/current_rent"
+        android:textSize="24sp"
+        android:layout_margin="6dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/tenantRentListLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/tenantAddRentBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_rent" />
 
 </LinearLayout>
