@@ -15,6 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AddProperty extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class AddProperty extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     String FirebaseUID = firebaseAuth.getCurrentUser().getUid();
     String UserID = FirebaseUID.substring(0, 4);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +40,13 @@ public class AddProperty extends AppCompatActivity {
         address = (TextInputLayout) findViewById(R.id.inputAddress);
         price = (TextInputLayout) findViewById(R.id.inputPrice);
         billDate = (TextInputLayout) findViewById(R.id.inputBillDate);
-        toolbar = (Toolbar) findViewById(R.id.toolbarAddProperty);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbarAddProperty);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Property");
+
         createRadioGroup();
+
         addProperty = (Button) findViewById(R.id.addPropertyBtn);
         addProperty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,10 +143,11 @@ public class AddProperty extends AppCompatActivity {
             Boolean fur = Furnished;
 
             Room room = new Room(Address, BillDate, Type, Price, fur);
-            String dbRoomID = UserID + Integer.toString(room.id);
+            DatabaseReference roomRef = reference.push();
+            String dbRoomID = UserID + "-" +roomRef.getKey().substring(roomRef.getKey().length() - 3);
             room.setInviteCode(dbRoomID);
             room.setOwner(FirebaseUID);
-            reference.child(dbRoomID).setValue(room);
+            roomRef.setValue(room);
         }
     }
 }

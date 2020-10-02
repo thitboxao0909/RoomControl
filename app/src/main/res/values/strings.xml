@@ -32,4 +32,11 @@
     <string name="add_property">Add Property</string>
     <string name="room_type">Room Type:</string>
     <string name="furnished">Furnished ?</string>
+    <string name="address">Address</string>
+    <string name="comfirm_edit">Comfirm Edit</string>
+    <string name="invite_code">Invite Code:</string>
+    <string name="property_address">Property Address</string>
+    <string name="property_price">Property Price</string>
+    <string name="bill_date">Bill Date</string>
+    <string name="occupant">Occupant:</string>
 </resources>

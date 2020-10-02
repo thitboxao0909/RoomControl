@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class LandlordMain extends AppCompatActivity {
 
@@ -56,7 +58,7 @@ public class LandlordMain extends AppCompatActivity {
 
 
         rootNode = FirebaseDatabase.getInstance();
-        rootNode.setPersistenceEnabled(true);
+        //rootNode.setPersistenceEnabled(true);
 
         addProperty = (Button) findViewById(R.id.landLordAddPropertyBtn);
         addProperty.setOnClickListener(new View.OnClickListener() {
@@ -67,28 +69,42 @@ public class LandlordMain extends AppCompatActivity {
         });
 
         propertyList = (LinearLayout) findViewById(R.id.landlordScroll);
+        propertyList.removeAllViewsInLayout();
+        revenue = 0;
+        refreshFromDataBase();
 
         refresh = (Button) findViewById(R.id.landlordRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                propertyList.removeAllViewsInLayout();
+                propertyList.removeAllViews();
+                revenue = 0;
                 refreshFromDataBase();
             }
         });
     }
 
     private void refreshFromDataBase() {
+        propertyList.removeAllViews();
         reference = rootNode.getReference("room");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot room_snapshot:snapshot.getChildren()) {
-                    Room room = room_snapshot.getValue(Room.class);
+                     Room room = room_snapshot.getValue(Room.class);
 
                     if (room.getOwner().equals(FirebaseUID))
                     {
-                        final String ID = room.getInviteCode();
+                        final String id = room_snapshot.getKey();
+                        final String inviteCode = room.getInviteCode();
+                        final String address = room.getAddress();
+                        final String billDate = room.getBillDate();
+                        final String roomType = room.getRoomType();
+                        final Boolean fur = room.getFurnished();
+                        final String Price = Integer.toString(room.getPrice());
+                        List<String> Occupant = room.getOccupant();
+                        final String[] occupant = Occupant.toArray(new String[Occupant.size()]);
+
                         TextView textView = new TextView(LandlordMain.this);
                         textView.setText("Room: " + "\n Address:" + room.getAddress()
                                 + "\n Revenue: " + room.getPrice()
@@ -99,7 +115,14 @@ public class LandlordMain extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(LandlordMain.this, PropertyEdit.class);
-                                intent.putExtra("Room id", ID);
+                                intent.putExtra("ID", id);
+                                intent.putExtra("Invite code", inviteCode);
+                                intent.putExtra("Address", address);
+                                intent.putExtra("Price",Price);
+                                intent.putExtra("Bill Date", billDate);
+                                intent.putExtra("Furnished", fur);
+                                intent.putExtra("Room type", roomType);
+                                intent.putExtra("Occupant list", occupant);
                                 startActivity(intent);
                             }
                         });
@@ -116,5 +139,13 @@ public class LandlordMain extends AppCompatActivity {
             }
         });
     }
+
+    protected void onResume() {
+        super.onResume();
+        propertyList.removeAllViews();
+        revenue = 0;
+        refreshFromDataBase();
+    }
+
 
 }
