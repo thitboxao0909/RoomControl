@@ -43,4 +43,6 @@
     <string name="add_rent">Add Rent</string>
     <string name="enter_invite_code">Enter Invite Code</string>
     <string name="ok">OK</string>
+    <string name="rent_per_month">Rent per month</string>
+    <string name="remove_rent">Remove Rent</string>
 </resources>
