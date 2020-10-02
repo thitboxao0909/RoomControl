@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("App Settings");
+
         logInText = (TextView) findViewById(R.id.logInText);
         //Firebase auth
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();

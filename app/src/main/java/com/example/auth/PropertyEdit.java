@@ -20,6 +20,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PropertyEdit extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -52,8 +56,6 @@ public class PropertyEdit extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("room");
 
 
-
-
         displayDetails();
         createRadioGroup();
 
@@ -80,7 +82,9 @@ public class PropertyEdit extends AppCompatActivity {
 
     private void getOccupant() {
         LinearLayout listOccupantLayout = (LinearLayout) findViewById(R.id.editListOccupantLayout);
+
         listOccupantLayout.removeAllViews();
+
         LinearLayout.LayoutParams btnLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         btnLayoutParams.setMargins(6, 6, 6, 6);
@@ -94,28 +98,32 @@ public class PropertyEdit extends AppCompatActivity {
         } else {
             for(int i = 0; i < _OCCUPANT.length; i++)
             {
-                LinearLayout Occupant = new LinearLayout(this);
-                Occupant.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout OccupantLayout = new LinearLayout(this);
+                OccupantLayout.setOrientation(LinearLayout.HORIZONTAL);
+                OccupantLayout.removeAllViews();
+
                 TextView occupant = new TextView(this);
                 final String email = _OCCUPANT[i];
                 occupant.setText(email);
-                occupant.setTextSize(24);
-                Occupant.addView(occupant);
+                occupant.setTextSize(18);
+                OccupantLayout.addView(occupant);
                 Button remove = new Button(this);
                 remove.setText("Remove");
                 remove.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        removeTenant(email);
+                        removeTenant(email, _OCCUPANT, _ID);
                     }
                 });
-                Occupant.addView(remove,btnLayoutParams);
-                listOccupantLayout.addView(Occupant);
+                OccupantLayout.addView(remove,btnLayoutParams);
+                listOccupantLayout.addView(OccupantLayout);
             }
         }
     }
 
-    private void removeTenant(String email) {
+    private void removeTenant(final String email, final String[] occupants, final String ID) {
+
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("room");
         AlertDialog.Builder builder1 = new AlertDialog.Builder(PropertyEdit.this);
         builder1.setMessage("Are you sure about removing this tenant?");
         builder1.setCancelable(true);
@@ -124,6 +132,11 @@ public class PropertyEdit extends AppCompatActivity {
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        List<String> list = new ArrayList<String>(Arrays.asList(occupants));
+                        list.removeAll(Arrays.asList(email));
+                        _OCCUPANT = list.toArray(occupants);
+                        reference.child(ID).child("occupant").setValue(list);
+                        getOccupant();
                         dialog.cancel();
                     }
                 });

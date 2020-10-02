@@ -39,4 +39,8 @@
     <string name="property_price">Property Price</string>
     <string name="bill_date">Bill Date</string>
     <string name="occupant">Occupant:</string>
+    <string name="current_rent">Current Rent:</string>
+    <string name="add_rent">Add Rent</string>
+    <string name="enter_invite_code">Enter Invite Code</string>
+    <string name="ok">OK</string>
 </resources>
