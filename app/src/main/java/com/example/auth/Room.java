@@ -1,19 +1,18 @@
 package com.example.auth;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Room {
     String address, billDate, roomType, inviteCode, owner;
-    int price, id;
+    int price;
     Boolean furnished,occupied;
-    private static AtomicInteger uniqueID = new AtomicInteger();
-    int[] Occupant;
+    List<String> Occupant = new ArrayList<String>();
 
     public Room(){}
 
     public Room(String address, String billDate, String roomType, int price, Boolean furnished)
     {
-        this.id = uniqueID.getAndIncrement();
         this.address = address;
         this.billDate = billDate;
         this.roomType = roomType;
@@ -22,6 +21,7 @@ public class Room {
         this.occupied = false;
         this.inviteCode = null;
     }
+
 
     public String getAddress() {
         return address;
@@ -85,5 +85,13 @@ public class Room {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public List<String> getOccupant() {
+        return Occupant;
+    }
+
+    public void setOccupant(List<String> occupant) {
+        Occupant = occupant;
     }
 }

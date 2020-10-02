@@ -1,5 +1,6 @@
 package com.example.auth;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         Name = (TextView) findViewById(R.id.nameText);
         Name.setText(firebaseAuth.getCurrentUser().getDisplayName());
 
+        String fireBaseUID = firebaseAuth.getCurrentUser().getUid();
+        String userName = firebaseAuth.getCurrentUser().getDisplayName().toString();
+        String userEmail = firebaseAuth.getCurrentUser().getEmail().toString();
+        addUserToDatabase(fireBaseUID, userName, userEmail);
+
         getStartedBtn = (Button) findViewById(R.id.getStartedBtn);
         getStartedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +73,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void addUserToDatabase(final String fireBaseUID, final String name, final String email) {
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean found = false;
+                for(DataSnapshot dSnapShot:snapshot.getChildren())
+                {
+                    User user = dSnapShot.getValue(User.class);
+                    if (user.getFireBaseUID().equals(fireBaseUID))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                {
+                    DatabaseReference userRef = reference.push();
+                    User user = new User(name, email, fireBaseUID);
+                    userRef.setValue(user);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 }
