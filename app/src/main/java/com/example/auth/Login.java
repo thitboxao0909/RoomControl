@@ -1,14 +1,14 @@
 package com.example.auth;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -47,6 +47,7 @@ public class Login extends AppCompatActivity {
 
         signInClient = GoogleSignIn.getClient(this,gso);
 
+        // check if this account is signed?
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(signInAccount != null || firebaseAuth.getCurrentUser() != null)
         {
@@ -71,6 +72,8 @@ public class Login extends AppCompatActivity {
         if(requestCode == GOOGLE_SIGN_IN_CODE)
         {
             Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            //handle sign in result
             try {
 
                 GoogleSignInAccount signInAccount = signInTask.getResult(ApiException.class);

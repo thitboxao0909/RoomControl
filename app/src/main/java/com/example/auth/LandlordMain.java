@@ -1,17 +1,14 @@
 package com.example.auth;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class LandlordMain extends AppCompatActivity {
@@ -42,6 +38,7 @@ public class LandlordMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landlord_main);
 
+        // nut setting --> chuyen huong qua class setting
         settingBtn = (Button) findViewById(R.id.landlordSettingsBtn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,16 +47,21 @@ public class LandlordMain extends AppCompatActivity {
             }
         });
 
+
+        // hien thi ten cua khach hang
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         Name = (TextView) findViewById(R.id.landLordName);
         Name.setText(firebaseAuth.getCurrentUser().getDisplayName());
 
+        // hien thi revenue
         revenueSum = (TextView) findViewById(R.id.landLordTotalRevenue);
 
 
         rootNode = FirebaseDatabase.getInstance();
         //rootNode.setPersistenceEnabled(true);
 
+
+        // add property --> chuyen huong qua class addproperty
         addProperty = (Button) findViewById(R.id.landLordAddPropertyBtn);
         addProperty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +70,13 @@ public class LandlordMain extends AppCompatActivity {
             }
         });
 
+        // display properties
         propertyList = (LinearLayout) findViewById(R.id.landlordScroll);
         propertyList.removeAllViewsInLayout();
         revenue = 0;
         refreshFromDataBase();
 
+        // remove all properties
         refresh = (Button) findViewById(R.id.landlordRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +90,7 @@ public class LandlordMain extends AppCompatActivity {
 
     private void refreshFromDataBase() {
         propertyList.removeAllViews();
-        reference = rootNode.getReference("room");
+        reference = rootNode.getReference("room"); // accent to node room in the database
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -95,6 +99,7 @@ public class LandlordMain extends AppCompatActivity {
 
                     if (room.getOwner().equals(FirebaseUID))
                     {
+                        // get data about room
                         final String id = room_snapshot.getKey();
                         final String inviteCode = room.getInviteCode();
                         final String address = room.getAddress();
@@ -103,12 +108,16 @@ public class LandlordMain extends AppCompatActivity {
                         final Boolean fur = room.getFurnished();
                         final String Price = Integer.toString(room.getPrice());
                         List<String> Occupant = room.getOccupant();
-                        final String[] occupant = Occupant.toArray(new String[Occupant.size()]);
+                        final String[] occupant = Occupant.toArray(new String[Occupant.size()]); // list of rentals
 
+                        // display data
                         TextView textView = new TextView(LandlordMain.this);
                         textView.setText("Room: " + "\n Address:" + room.getAddress()
                                 + "\n Revenue: " + room.getPrice()
-                                + "\n Billing Date: " + room.getBillDate());
+                                + "\n Billing Date: " + room.getBillDate()
+                                + "\n Invite Code: " +room.getInviteCode());
+
+                        // view details
                         textView.setTextSize(18);
                         textView.setClickable(true);
                         textView.setOnClickListener(new View.OnClickListener() {

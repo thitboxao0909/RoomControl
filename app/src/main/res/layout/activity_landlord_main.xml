@@ -31,13 +31,28 @@
         android:text="@string/name"
         android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/landlordRefresh"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/refresh_data"
-        android:layout_gravity="end"
-        android:layout_margin="6dp"/>
+        android:gravity="right|end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/landlordRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="6dp"
+            android:text="@string/refresh_data" />
+
+        <Button
+            android:id="@+id/landLordAddPropertyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="6dp"
+            android:text="@string/add_property" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/landLordTotalRevenue"
@@ -59,13 +74,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/landLordAddPropertyBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_property"
-        android:layout_gravity="end"
-        android:layout_margin="6dp"/>
 
 </LinearLayout>

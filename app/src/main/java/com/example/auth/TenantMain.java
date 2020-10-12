@@ -83,6 +83,7 @@ public class TenantMain extends AppCompatActivity {
                     Room room = room_snapshot.getValue(Room.class);
                     ArrayList<String> currentOccupant = (ArrayList<String>) room.getOccupant();
 
+                    // getdata of tenant
                     for(String tenant : currentOccupant)
                     {
                         if(tenant.equals(_EMAIL))

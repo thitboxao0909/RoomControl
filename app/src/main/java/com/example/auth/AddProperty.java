@@ -1,8 +1,5 @@
 package com.example.auth;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,13 +7,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AddProperty extends AppCompatActivity {
@@ -36,17 +33,21 @@ public class AddProperty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_property);
+
+
         //layout hook
         address = (TextInputLayout) findViewById(R.id.inputAddress);
         price = (TextInputLayout) findViewById(R.id.inputPrice);
         billDate = (TextInputLayout) findViewById(R.id.inputBillDate);
 
+        //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbarAddProperty);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Add Property");
 
         createRadioGroup();
 
+        // add button
         addProperty = (Button) findViewById(R.id.addPropertyBtn);
         addProperty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +100,8 @@ public class AddProperty extends AppCompatActivity {
         }
     }
 
+
+    // no empty data
     private boolean validateInput() {
         String addressInput = address.getEditText().getText().toString();
         String priceInput = price.getEditText().getText().toString();
