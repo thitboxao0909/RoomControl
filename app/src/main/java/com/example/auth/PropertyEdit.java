@@ -85,11 +85,13 @@ public class PropertyEdit extends AppCompatActivity {
 
         listOccupantLayout.removeAllViews();
 
+        //display
         LinearLayout.LayoutParams btnLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         btnLayoutParams.setMargins(6, 6, 6, 6);
         btnLayoutParams.gravity = Gravity.END;
 
+        //getdata
         if (_OCCUPANT.length == 0) {
             TextView empty = new TextView(this);
             empty.setText("None");
@@ -124,6 +126,8 @@ public class PropertyEdit extends AppCompatActivity {
     private void removeTenant(final String email, final String[] occupants, final String ID) {
 
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("room");
+
+        // pop up a message
         AlertDialog.Builder builder1 = new AlertDialog.Builder(PropertyEdit.this);
         builder1.setMessage("Are you sure about removing this tenant?");
         builder1.setCancelable(true);
