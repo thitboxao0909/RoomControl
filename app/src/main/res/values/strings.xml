@@ -45,4 +45,5 @@
     <string name="ok">OK</string>
     <string name="rent_per_month">Rent per month</string>
     <string name="remove_rent">Remove Rent</string>
+    <string name="room_control">Room Control</string>
 </resources>

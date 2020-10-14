@@ -1,14 +1,17 @@
 package com.example.auth;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,14 +34,28 @@ public class Login extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient signInClient;
     TextView Text;
+    TextView title;
     FirebaseAuth firebaseAuth;
+
+    Animation topAnim, bottomAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_login);
+
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_anim);
+        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+
+        // diplay text and animation
         Text = findViewById(R.id.textView);
+        Text.setAnimation(bottomAnim);
+        title = findViewById(R.id.wc);
+        title.setAnimation(topAnim);
         signIn = findViewById(R.id.sign_in_button);
+        signIn.setAnimation(bottomAnim);
+
         firebaseAuth = FirebaseAuth.getInstance();
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("463148419152-jtri3odp06qii47tvhod7j9afnptnsaj.apps.googleusercontent.com")
@@ -47,6 +64,7 @@ public class Login extends AppCompatActivity {
 
         signInClient = GoogleSignIn.getClient(this,gso);
 
+        // check if this account is signed?
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(signInAccount != null || firebaseAuth.getCurrentUser() != null)
         {
@@ -71,6 +89,8 @@ public class Login extends AppCompatActivity {
         if(requestCode == GOOGLE_SIGN_IN_CODE)
         {
             Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            //handle sign in result
             try {
 
                 GoogleSignInAccount signInAccount = signInTask.getResult(ApiException.class);
