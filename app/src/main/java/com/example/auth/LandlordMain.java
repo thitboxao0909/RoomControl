@@ -74,9 +74,7 @@ public class LandlordMain extends AppCompatActivity {
 
         // display properties
         propertyList = (LinearLayout) findViewById(R.id.landlordScroll);
-        propertyList.removeAllViewsInLayout();
-        revenue = 0;
-        refreshFromDataBase();
+
 
         // remove all properties
         refresh = (Button) findViewById(R.id.landlordRefresh);

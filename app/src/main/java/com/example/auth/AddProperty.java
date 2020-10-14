@@ -25,6 +25,7 @@ public class AddProperty extends AppCompatActivity {
     private Button addProperty;
     private FirebaseDatabase rootNode;
     private DatabaseReference reference;
+    private boolean correct = false;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     String FirebaseUID = firebaseAuth.getCurrentUser().getUid();
     String UserID = FirebaseUID.substring(0, 4);
@@ -52,10 +53,14 @@ public class AddProperty extends AppCompatActivity {
         addProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 addProperty();
-                Toast.makeText(AddProperty.this, "Room added. Database update may take a moment", Toast.LENGTH_SHORT)
-                        .show();
-                finish();
+                if(correct) {
+                    Toast.makeText(AddProperty.this, "Room added. Database update may take a moment", Toast.LENGTH_SHORT)
+                            .show();
+                    finish();
+                }
+
             }
         });
     }
@@ -133,7 +138,10 @@ public class AddProperty extends AppCompatActivity {
 
     private void addProperty() {
 
-        if(!validateInput()) return;
+        if(!validateInput()){
+            correct = false;
+            return;}
+
         else
         {
             rootNode = FirebaseDatabase.getInstance();
@@ -151,6 +159,7 @@ public class AddProperty extends AppCompatActivity {
             room.setInviteCode(dbRoomID);
             room.setOwner(FirebaseUID);
             roomRef.setValue(room);
+            correct = true;
         }
     }
 }

@@ -1,9 +1,5 @@
 package com.example.auth;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +11,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
@@ -218,17 +218,21 @@ public class PropertyEdit extends AppCompatActivity {
     }
 
     private boolean isPriceChanged() {
-        if(!_PRICE.equals(price.getEditText().getText().toString()))
+        if(!_PRICE.equals(price.getEditText().getText().toString()) || validateInput())
         {
-            reference.child(_ID).child("price").setValue(price.getEditText().getText().toString().trim());
+            if (price.getEditText().getText().toString().equals(""))
+                reference.child(_ID).child("price").setValue(0);
+            else reference.child(_ID).child("price").setValue(price.getEditText().getText().toString().trim());
             return true;
         }else return false;
     }
 
     private boolean isBillDateChanged() {
-        if(!_BILLDATE.equals(billDate.getEditText().getText().toString()))
+        if(!_BILLDATE.equals(billDate.getEditText().getText().toString()) || validateInput())
         {
-            reference.child(_ID).child("billDate").setValue(billDate.getEditText().getText().toString().trim());
+            if (billDate.getEditText().getText().toString().equals(""))
+                reference.child(_ID).child("billDate").setValue(1);
+            else reference.child(_ID).child("billDate").setValue(billDate.getEditText().getText().toString().trim());
             return true;
         }else return false;
     }
@@ -249,4 +253,32 @@ public class PropertyEdit extends AppCompatActivity {
         }else return false;
     }
 
+    private boolean validateInput() {
+        String addressInput = address.getEditText().getText().toString();
+        String priceInput = price.getEditText().getText().toString();
+        String billDateInput = billDate.getEditText().getText().toString();
+
+        if(addressInput.isEmpty())
+        {
+            address.setError("Empty");
+            return false;
+        } else if(priceInput.isEmpty())
+        {
+            price.setError("Empty");
+            return false;
+        } else if(billDateInput.isEmpty())
+        {
+            billDate.setError("Empty");
+            return false;
+        } else
+        {
+            address.setError(null);
+            price.setError(null);
+            billDate.setError(null);
+            address.setErrorEnabled(false);
+            price.setErrorEnabled(false);
+            billDate.setErrorEnabled(false);
+            return true;
+        }
+    }
 }
